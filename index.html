@@ -3,15 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <title>Todo App</title>
+    <link rel="stylesheet" href="index.css" />
+    <script defer src="index.js"></script>
   </head>
   <body>
     <h1>Todo App</h1>
+    <small id="error-message"></small>
     <form>
-      <input type="text" id="todoInput" placeholder="Add Todo" />
+      <input type="text" id="title-input" placeholder="Add Title" />
+      <br />
+      <input type="text" id="description-input" placeholder="Add Todo" />
       <button type="submit">Add</button>
-      <div id="error-message" class="error"></div>
+      <select id="priority-select">
+        <option value="3">High</option>
+        <option value="2">Medium</option>
+        <option value="1">Low</option>
+      </select>
     </form>
     <ul id="todo-list"></ul>
-    <script src="index.js"></script>
   </body>
 </html>
