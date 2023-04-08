@@ -8,18 +8,19 @@
   </head>
   <body>
     <h1>Todo App</h1>
-    <small id="error-message"></small>
     <form>
-      <input type="text" id="title-input" placeholder="Add Title" />
-      <br />
-      <input type="text" id="description-input" placeholder="Add Todo" />
-      <button type="submit">Add</button>
-      <select id="priority-select">
+      <label for="todoInput">Add new todo:</label>
+      <input type="text" id="todoInput" placeholder="New Task" />
+      <select id="priority-select" class="star-rating">
         <option value="3">High</option>
         <option value="2">Medium</option>
         <option value="1">Low</option>
       </select>
+      <small id="error-message"></small>
+      <button type="submit">Add</button>
+      <button id="clearBtn">Clear all</button>
     </form>
+    <div id="todoList"></div>
     <ul id="todo-list"></ul>
   </body>
 </html>

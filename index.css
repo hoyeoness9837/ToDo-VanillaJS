@@ -1,11 +1,128 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
+  background-color: #f8f8f8;
+  font-family: Arial, sans-serif;
+}
 
+h1 {
+  margin: 20px 0;
+  text-align: center;
+}
 
-.completed div {
-    background-color: #f2f2f2;
-    text-decoration: line-through;
-  }
+form {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 600px; /* 추가된 속성 */
+}
+
+label {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+#todoInput {
+  font-size: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%; /* 추가된 속성 */
+  box-sizing: border-box; /* 추가된 속성 */
+}
+
+#priority-select {
+  font-size: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%; /* 추가된 속성 */
+  box-sizing: border-box; /* 추가된 속성 */
+}
+
+#deleteBtn {
+  background-color: #ff2222d4;
+  padding: 4px;
+  color:white;
+  border: none;
+  border-radius: 4rem;
+  margin-left: 4px;
+}
+
+#deleteBtn:hover {
+  cursor: pointer;
+  background-color: #b90e0ed4;
+}
+
+button[type="submit"],
+#clearBtn {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+button[type="submit"]:hover,
+#clearBtn:hover {
+  background-color: #3e8e41;
+}
+
+#todoList {
+  margin: 20px auto;
+  max-width: 600px;
+  display: flex; /* 추가된 속성 */
+  flex-direction: column; /* 추가된 속성 */
+}
+
+.todoItem {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%; /* 추가된 속성 */
+  box-sizing: border-box; /* 추가된 속성 */
+}
+
+.completed {
+  text-decoration: line-through;
+  color: grey;
+  background-color: #f2f2f2;
+}
+
+#error-message {
+  color: red;
+  margin-top: 10px; /* 추가된 속성 */
+}
+
+.text {
+  flex: 1;
+  font-size: 20px;
+  margin-right: 20px;
+}
+
+.priorityNumber {
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 20px;
+  min-width: 30px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.priorityNumber span {
+  display: inline-block;
+  margin-right: 5px;
+  width: 20px;
+  height: 20px;
+}
+
+.priorityNumber .star {
+  color: #ffc107;
+}
+
+/* 미디어 쿼리 추가 */
