@@ -31,7 +31,7 @@ class ParseItem {
 
   static getTimeDifference(start, end) {
     // 시작 시간과 끝 시간의 차이를 밀리초 단위로 계산
-    const diff = Math.abs(end.getTime() - start.getTime());
+    const diff = Math.abs(Date.parse(end) - Date.parse(start));
 
     // 차이를 일, 시간, 분, 초 단위로 변환
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
@@ -56,15 +56,15 @@ class ParseItem {
 // client가 입력한 텍스트를 이용하여 로컬스토리지에 CRUD 하고, 요소들을 생성해 렌더링해줌.
 class TodoList {
   // 투두의 디폴트 상태
-  constructor() {
+  constructor(modal) {
     this.todoItems = [];
+    this.modal = modal;
     this.init(); // 생성자에서 메소드를 직접 불러 new TodoList()로 새로운 객체를 만들때 마다 init()이 먼저 작동함.
   }
 
   init() {
     // 과거 작성한 기록이 있는지 로드.
     this.loadFromStorage();
-
     // 이벤트 핸들러를 폼태그와 버튼에 바인딩하여 DOM 리스닝 하도록 함.
     const form = document.querySelector('form');
     form.addEventListener('submit', this.addTodo.bind(this));
@@ -108,11 +108,20 @@ class TodoList {
   }
 
   deleteTodo(id) {
-    const index = this.todoItems.findIndex((item) => item.id === id);
-    if (index !== -1) {
-      this.todoItems.splice(index, 1);
-      this.renderTodoList();
-      this.updateToStorage();
+    this.todoItems = this.todoItems.filter((item) => item.id !== id);
+    this.renderTodoList();
+    this.updateToStorage();
+  }
+
+  editTodo(id) {
+    const todo = this.todoItems.find((item) => item.id === id);
+    if (todo) {
+      this.modal.onSave = (newText) => {
+        todo.text = newText;
+        this.renderTodoList();
+        this.updateToStorage();
+      };
+      this.modal.open(todo.text);
     }
   }
 
@@ -177,8 +186,8 @@ class TodoList {
         ? (timestampEl.textContent = `Took ${ParseItem.getTimeDifference(
             item.createdAt,
             item.completedAt
-          )} `)
-        : (timestampEl.textContent = `Created At ${item.createdAt.toLocaleString()}`);
+          )} to finish`)
+        : (timestampEl.textContent = `${item.createdAt.toLocaleString()}`);
       todoItemEl.appendChild(timestampEl);
 
       const deleteBtnEl = document.createElement('button');
@@ -190,9 +199,52 @@ class TodoList {
       );
       todoItemEl.appendChild(deleteBtnEl);
 
+      const editBtnEl = document.createElement('button');
+      editBtnEl.textContent = 'Edit';
+      editBtnEl.id = 'edit-button';
+      editBtnEl.addEventListener('click', this.editTodo.bind(this, item.id));
+      todoItemEl.appendChild(editBtnEl);
+
+      // append all element to todolist elem
       todoList.appendChild(todoItemEl);
     }
   }
 }
 
-const todoList = new TodoList();
+class Modal {
+  constructor(modalElementId, editTodoInputId) {
+    this.modal = document.getElementById(modalElementId);
+    this.editTodoInput = document.getElementById(editTodoInputId);
+    this.saveButton = document.getElementById('save-button');
+    this.isOpen = false;
+    this.onSave = () => {};
+  }
+
+  open(todoText) {
+    this.editTodoInput.value = todoText;
+    this.modal.style.display = 'block';
+    this.isOpen = true;
+    this.saveButton.addEventListener('click', this.handleButtonClick);
+  }
+
+  close() {
+    this.modal.style.display = 'none';
+    this.editTodoInput.value = '';
+    this.isOpen = false;
+    this.saveButton.removeEventListener('click', this.handleButtonClick);
+  }
+
+  handleButtonClick = () => {
+    const editedTodoText = this.editTodoInput.value.trim();
+
+    if (editedTodoText) {
+      this.onSave(editedTodoText);
+      this.close();
+    }
+    const closeButton = document.getElementById('close-button');
+    closeButton.addEventListener('click', this.close.bind(this));
+  };
+}
+
+const modal = new Modal('modal', 'edit-todo-input');
+const todoList = new TodoList(modal);

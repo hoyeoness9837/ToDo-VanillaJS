@@ -7,20 +7,31 @@
     <script defer src="index.js"></script>
   </head>
   <body>
-    <h1>Todo App</h1>
-    <form>
-      <label for="todoInput">Add new todo:</label>
-      <input type="text" id="todoInput" placeholder="New Task" />
-      <select id="priority-select" class="star-rating">
-        <option value="3">High</option>
-        <option value="2">Medium</option>
-        <option value="1">Low</option>
-      </select>
-      <small id="error-message"></small>
-      <button type="submit">Add</button>
-      <button id="clearBtn">Clear all</button>
-    </form>
-    <div id="todoList"></div>
-    <ul id="todo-list"></ul>
+    <div class="container">
+      <h1>Todo App</h1>
+      <form>
+        <label for="todoInput">Add new todo:</label>
+        <input type="text" id="todoInput" placeholder="New Task" />
+        <select id="priority-select" class="star-rating">
+          <option value="3">High</option>
+          <option value="2">Medium</option>
+          <option value="1">Low</option>
+        </select>
+        <small id="error-message"></small>
+        <button type="submit">Add</button>
+        <button id="clearBtn">Clear all</button>
+      </form>
+      <div id="todoList"></div>
+      <ul id="todo-list"></ul>
+    </div>
+    <!-- 모달창 -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span id="close-button">&times;</span>
+        <h2>Edit Todo</h2>
+        <input type="text" id="edit-todo-input" />
+        <button id="save-button">Save</button>
+      </div>
+    </div>
   </body>
 </html>
