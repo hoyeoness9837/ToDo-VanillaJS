@@ -1,10 +1,12 @@
 {
-  "name": "ToDo-VanillaJS",
+  "name": "todo_vanilla",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -16,8 +18,9 @@
   "bugs": {
     "url": "https://github.com/hoyeoness9837/ToDo-VanillaJS/issues"
   },
-  "homepage": "https://github.com/hoyeoness9837/ToDo-VanillaJS#readme",
+  "homepage": "https://hoyeoness9837.github.io/ToDo-VanillaJS",
   "dependencies": {
+    "gh-pages": "^5.0.0",
     "nodemon": "^2.0.22"
   }
 }
