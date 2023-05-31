@@ -1,17 +1,18 @@
-// 각 투두객체의 기본 스트럭쳐.
+/**  각 투두객체의 기본 스트럭쳐. */
 class TodoItem {
   constructor(text, priority) {
+    // 인스턴스 초기화, 인스턴스가 바인딩된 this 암묵적 리턴.
     this.id = ParseItem.generateUniqueId();
     this.text = text;
     this.completed = false;
-    this.stars = ParseItem.convertToStars(priority);
+    this.stars = ParseItem.convertPriorityToStars(priority);
     this.createdAt = new Date();
     this.completedAt = null;
   }
 }
 
 class ParseItem {
-  // 각 투두에 붙여질 유니크아이디 생성함수.
+  /** 각 투두에 붙여질 유니크아이디 생성함수. */
   static generateUniqueId() {
     return 'xxxx-yxxx'.replace(/[xy]/g, function (c) {
       const r = (Math.random() * 16) | 0;
@@ -20,8 +21,8 @@ class ParseItem {
     });
   }
 
-  //우선순위의 숫자 크기에 따라 별 모영의 갯수로 중요도를 표시.
-  static convertToStars(num) {
+  /** 우선순위의 숫자 크기에 따라 별 모영의 갯수로 중요도를 표시. */
+  static convertPriorityToStars(num) {
     let stars = '';
     for (let i = 0; i < num; i++) {
       stars += '⭐';
@@ -29,6 +30,7 @@ class ParseItem {
     return stars;
   }
 
+  /** 할일 시작시간과 끝나는 시간의 차이를 계산해 마치는데 걸리는 시간을 계산하는 함수 */
   static getTimeDifference(start, end) {
     // 시작 시간과 끝 시간의 차이를 밀리초 단위로 계산
     const diff = Math.abs(Date.parse(end) - Date.parse(start));
@@ -53,7 +55,7 @@ class ParseItem {
   }
 }
 
-// client가 입력한 텍스트를 이용하여 로컬스토리지에 CRUD 하고, 요소들을 생성해 렌더링해줌.
+/** client가 입력한 텍스트를 이용하여 로컬스토리지에 CRUD 하고, 요소들을 생성해 렌더링해줌. */ 
 class TodoList {
   // 투두의 디폴트 상태
   constructor(modal) {
@@ -62,6 +64,7 @@ class TodoList {
     this.init(); // 생성자에서 메소드를 직접 불러 new TodoList()로 새로운 객체를 만들때 마다 init()이 먼저 작동함.
   }
 
+  /**투두 생성시 맨 처음 작동할 함수 */
   init() {
     // 과거 작성한 기록이 있는지 로드.
     this.loadFromStorage();
@@ -212,10 +215,10 @@ class TodoList {
 }
 
 class Modal {
-  constructor(modalElementId, editTodoInputId) {
+  constructor(modalElementId, editTodoInputId,saveButtonId) {
     this.modal = document.getElementById(modalElementId);
     this.editTodoInput = document.getElementById(editTodoInputId);
-    this.saveButton = document.getElementById('save-button');
+    this.saveButton = document.getElementById(saveButtonId);
     this.isOpen = false;
     this.onSave = () => {};
   }
@@ -246,5 +249,5 @@ class Modal {
   };
 }
 
-const modal = new Modal('modal', 'edit-todo-input');
+const modal = new Modal('modal', 'edit-todo-input', 'save-button');
 const todoList = new TodoList(modal);
